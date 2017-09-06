@@ -4,7 +4,10 @@ N = 200;
 p = 5;
 beta = 2;
 iterations = 20;
-tmax = 100;
+tmax = 20;
+m = zeros(tmax, iterations);
+
+for iteration = 1:iterations
 
 patterns = GeneratePatterns(p, N);
 
@@ -21,3 +24,19 @@ for t=1:tmax-1
    states(:,t+1) = StochasticUpdate(beta, states(:,t), weights);
 end
 
+m(:, iteration) = OrderParameter(states, patterns(:,1));
+
+end
+
+subplot(121)
+plot(m)
+title('Order parameter m')
+xlabel('time')
+ylabel('order parameter')
+
+subplot(122)
+plot(abs(m))
+title('Absolute value of m')
+xlabel('time')
+ylabel('order parameter')
+axis([0 tmax 0 1])
