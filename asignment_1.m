@@ -3,7 +3,7 @@
 clf;
 p = [1, (20:20:400)]';
 N = 200;
-num_bits = 50000;
+num_bits = 10000;
 
 p_err = zeros(length(p),1);
 
@@ -18,6 +18,6 @@ erf_vec = 1 - erf((sqrt(N./(2*p))));
 
 hold on
 plot(p/N,p_err,'*')
-plot(p/N, erf_vec, 'o')
+%plot(p/N, erf_vec, 'o')
 xlabel('p/N')
 ylabel('OSEP')

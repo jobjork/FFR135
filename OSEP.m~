@@ -10,7 +10,6 @@ for i = 1:iterations
         weights = weights + 1/N*patterns(:,k) * patterns(:,k)';
     end
     error_vector = zeros(p*N,iterations);
-
     for j = 1:p
        state = patterns(:,j);
        new_state = Hopfield(weights, state);
