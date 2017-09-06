@@ -14,10 +14,10 @@ for i=1:length(p)
    toc
 end
 
-erf_vec = 1 - erf((sqrt(N./(2*p))));
+erf_vec = 0.5*(1 - erf( (p+N)./(p*sqrt(2)) ) );
 
 hold on
 plot(p/N,p_err,'*')
-%plot(p/N, erf_vec, 'o')
+plot(p/N, erf_vec, 'o')
 xlabel('p/N')
 ylabel('OSEP')
