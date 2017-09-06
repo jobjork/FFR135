@@ -1,7 +1,7 @@
 %function p_err = OSEP(p, N , numBits)
 
-p = 61;
-N = 1000;
+p = 610;
+N = 10000;
 num_bits = 10000;
 
 patterns = GeneratePatterns(p, N);
@@ -13,7 +13,7 @@ end
 
 %{
 for i=1:N
-    weights(i,i) = 0;
+    weights(i,i) = 0;err_vec
 end
 %}
 
@@ -22,6 +22,23 @@ count = 0;
 
 %% TODO: Add all the new_state(index)~=state(index)s in a long vector,
 % sample 10000 from this vector and form the p_err
+
+
+iterations = ceil(num_bits/(p*N));
+error_vector = zeros(p*N,iterations);
+
+for i = 1:iterations
+    for j = 1:p
+       state = patterns(:,p);
+       new_state = sign(weights*state);
+       error_vector((j-1)*N+1:j*N,i) = new_state~=state;
+    end
+end
+error_vector=error_vector(:); 
+
+
+%%
+
 if p*N >= num_bits
     index = randperm(1:(p*N));
     index = index(1:num_bits);
