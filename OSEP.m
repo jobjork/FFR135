@@ -12,8 +12,8 @@ error_vector = zeros(p*N,iterations);
 
 for i = 1:iterations
     for j = 1:p
-       state = patterns(:,p);
-       new_state = sign(weights*state);
+       state = patterns(:,j);
+       new_state = Hopfield(weights, state);
        error_vector((j-1)*N+1:j*N,i) = new_state~=state;
     end
 end
