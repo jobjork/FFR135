@@ -14,7 +14,9 @@ for i=1:length(p)
    toc
 end
 
-erf_vec = 0.5*(1 - erf( (p+N)./(p*sqrt(2)) ) );
+%erf_vec = 0.5*(1 - erf( (p+N)./(p*sqrt(2)) ) );
+erf_vec = 0.5*(1 - erf( (p*N)./(sqrt(2*p*N)) ) );
+% sigma är p/N, inte variansen
 
 hold on
 plot(p/N,p_err,'*')
