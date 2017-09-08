@@ -10,12 +10,12 @@ p_err = zeros(length(p),1);
 for i=1:length(p)
    tic
    p_err(i) = OSEP(p(i), N, num_bits);
-   disp(['Iteration number ', num2str(i)])
+   %disp(['Iteration number ', num2str(i)])
    toc
 end
 
 %erf_vec = 0.5*(1 - erf( (p+N)./(p*sqrt(2)) ) );
-erf_vec = 0.5*(1 - erf( (p*N)./(sqrt(2*p*N)) ) );
+erf_vec = 0.5*(1 - erf( sqrt(p*N/2) ));
 % sigma är p/N, inte variansen
 
 hold on
