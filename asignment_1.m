@@ -10,7 +10,7 @@ p_err = zeros(length(p),1);
 for i=1:length(p)
    tic
    p_err(i) = OSEP(p(i), N, num_bits);
-   disp(['Iteration number ', num2str(i)])
+   %disp(['Iteration number ', num2str(i)])
    toc
 end
 
