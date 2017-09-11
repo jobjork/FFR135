@@ -16,6 +16,9 @@ weights = zeros(N,N);
 for k=1:p
     weights = weights + 1/N*patterns(:,k) * patterns(:,k)';
 end
+for i=1:N
+    weights(i,i)=0;
+end
 
 state_0 = patterns(:,1);
 states = zeros(N,tmax);
@@ -60,6 +63,9 @@ patterns = GeneratePatterns(p, N);
 weights = zeros(N,N);
 for k=1:p
     weights = weights + 1/N*patterns(:,k) * patterns(:,k)';
+end
+for i=1:N
+    weights(i,i)=0;
 end
 
 state_0 = patterns(:,1);
