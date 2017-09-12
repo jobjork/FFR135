@@ -20,15 +20,17 @@ for i=1:N
     weights(i,i)=0;
 end
 
-state_0 = patterns(:,1);
 states = zeros(N,tmax);
+state_0 = patterns(:,1);
 states(:,1)= state_0;
+
+m(1,iteration) = 1/N * (state_0'*state_0);
 
 for t=1:tmax-1
    states(:,t+1) = StochasticUpdate(beta, states(:,t), weights);
+   m(t+1,iteration) = 1/N * states(:,t+1)'*state_0;
 end
 
-m(:, iteration) = OrderParameter(states, patterns(:,1));
 
 end
 
