@@ -35,19 +35,13 @@ end
 end
 
 figure(1)
-subplot(221)
+subplot(211)
 plot(m)
 title('Order parameter m, p = 5')
 xlabel('time')
 ylabel('order parameter')
 axis([1 tmax -1 1])
 
-subplot(222)
-plot(abs(m))
-title('Magnitude of m, p = 5')
-xlabel('time')
-ylabel('order parameter')
-axis([1 tmax 0 1])
 
 
 % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -74,24 +68,20 @@ state_0 = patterns(:,1);
 states = zeros(N,tmax);
 states(:,1)= state_0;
 
+m(1,iteration) = 1/N * (state_0'*state_0);
+
 for t=1:tmax-1
    states(:,t+1) = StochasticUpdate(beta, states(:,t), weights);
+   m(t+1,iteration) = 1/N * states(:,t+1)'*state_0;
 end
 
-m(:, iteration) = OrderParameter(states, patterns(:,1));
-
 end
 
-subplot(223)
+subplot(212)
 plot(m)
 title('Order parameter m, p = 40')
 xlabel('time')
 ylabel('order parameter')
 axis([1 tmax -1 1])
 
-subplot(224)
-plot(abs(m))
-title('Magnitude of m, p = 40')
-xlabel('time')
-ylabel('order parameter')
-axis([1 tmax 0 1])
+
