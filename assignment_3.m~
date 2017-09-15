@@ -12,7 +12,7 @@ beta = 1/2;
 
 %% 3a
 
-iterations = 1e3;
+iterations = 1e6;
 w = rand(2,1)*0.4-0.2; % weights
 bias = rand(1,1)*2-1; % biases
 energy = zeros(iterations,1);
@@ -29,11 +29,18 @@ b = w'*xi - bias;
 output = tanh(beta*b);
 
 % output = output + (output==0) * (2*randi([0,1]) -1) % to deal with sign(0)
-energy(iter) = 0.5*(zeta - output)^2;
+for i = 1:length(train_data)
+    out_temp = tanh( beta * ( train_pat(i,:)*w - bias ));
+    energy(iter) = energy(iter) + 0.5*(train_ans(i) - out_temp)^2;
+end
 
 % 3: update the weights
 w = w + lr*beta*(1 - tanh(beta*b)^2)*(zeta-output).*xi;
 bias = bias - lr*beta*(1 - tanh(beta*b)^2)*(zeta-output);
+
+% w = w - lr*(output-zeta)*beta*(1-(tanh(beta*b))^2)*xi;
+% bias = bias - lr*(zeta-output)*beta*(1-(tanh(beta*b))^2);
+
 % 4: and do it all again
 end
 
