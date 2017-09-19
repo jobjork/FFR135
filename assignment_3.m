@@ -12,7 +12,6 @@ train_ans = train_data(:,3);
 val_pat = val_data(:,1:2);
 val_ans = val_data(:,3);
 
-
 lr = 0.02;
 beta = 1/2;
 %%
@@ -73,8 +72,8 @@ if iterations - iter < train_end
         c_err_v_temp(ind_count,i) = tanh( beta * (w'*val_pat(i,:)' - bias ));
     end
     
-    c_err_t = 1/(2*length(train_ans))*sum(abs(train_ans - sign(c_err_t_temp(ind_count,:))));
-    c_err_v = 1/(2*length(val_ans))*sum(abs(val_ans - sign(c_err_v_temp(ind_count,:))));
+    c_err_t(ind_count) = 1/(2*length(train_ans))*sum(abs(train_ans - sign(c_err_t_temp(ind_count,:))'));
+    c_err_v(ind_count) = 1/(2*length(val_ans))*sum(abs(val_ans - sign(c_err_v_temp(ind_count,:))'));
 end
 
 %%%%%%%%%%%%%%%%INTERLUDE%%%%%%%%%%%%%%%%%%%%
@@ -85,7 +84,6 @@ bias = bias - lr*beta*(1 - tanh(beta*b)^2)*(zeta-output);
 
 % 4: and do it all again
 end
-
 
 %%
 clf;
@@ -130,6 +128,10 @@ bias_out = rand(1,1)*2-1;
 iterations = 1e6;
 energy_train = zeros(iterations/1000,1);
 energy_val = zeros(iterations/1000,1);
+train_end = 1000;
+c_err_t = zeros(train_end, 1);
+c_err_v = zeros(train_end, 1);
+ind_count = 0;
 
 for iter = 1:iterations
 % 1: Pick a random pattern
@@ -163,6 +165,31 @@ if mod(iter,1000) == 0
         energy_val(iter/1000) = energy_val(iter/1000) + 0.5*(val_ans(i) - O_temp)^2;
     end
 end
+
+if iterations - iter < train_end
+    ind_count = ind_count + 1;
+    c_err_t_temp = zeros(train_end,length(train_ans));
+    c_err_v_temp = zeros(train_end,length(val_ans));
+    
+    for i = 1:length(train_data)
+        xi_temp = train_pat(i,:)';
+        V_temp = tanh(beta*(w_in*xi_temp - bias_in ));
+        b_out_temp = w_out'*V_temp - bias_out;
+        O_temp = tanh(beta*b_out_temp);
+        c_err_t_temp(ind_count,i) = O_temp;
+    end
+    
+    for i = 1:length(val_data)
+        xi_temp = val_pat(i,:)';
+        V_temp = tanh(beta*(w_in*xi_temp - bias_in ));
+        b_out_temp = w_out'*V_temp - bias_out;
+        O_temp = tanh(beta*b_out_temp);
+        c_err_v_temp(ind_count,i) = O_temp;
+    end
+    
+    c_err_t(ind_count) = 1/(2*length(train_ans))*sum(abs(train_ans - sign(c_err_t_temp(ind_count,:))'));
+    c_err_v(ind_count) = 1/(2*length(val_ans))*sum(abs(val_ans - sign(c_err_v_temp(ind_count,:))'));
+end
 %%%%%%%%%%%%%%%%INTERLUDE%%%%%%%%%%%%%%%%%%%%
 
 % 3: Update the weights (and bias) 
@@ -181,6 +208,7 @@ bias_out = bias_out + dbias_out;
 
 % 4: And do it all again
 end
+
 %%
 clf;
 subplot(1,2,1)

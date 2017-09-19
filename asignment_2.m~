@@ -38,22 +38,20 @@ WM(:,iteration) = WanderingMean(m(:,iteration), ts);
 end
 WM = [m(1,:) ; WM];
 
-
+subplot(211)
 plot(ts*(0:Tmax),WM)
-title('Order parameter m, p = 5', 'Interpreter', 'LaTeX')
-xlabel('time [iterations]', 'Interpreter', 'LaTeX')
-ylabel('order parameter', 'Interpreter', 'LaTeX')
-set(gca,'fontsize', 14)
+title('Order parameter m, p = 5')
+xlabel('time [iterations]')
+ylabel('order parameter')
 axis([1 tmax 0.9 1])
-box off;
 
-%%
+
 % % % % % % % % % % % % % % % % % % % % % % % % %
 % 2b)
 % % % % % % % % % % % % % % % % % % % % % % % % %
 
 p = 40;
-tmax = 20000;
+tmax = 15000;
 Tmax = floor(tmax/ts);
 m = zeros(tmax, iterations);
 WM = zeros(Tmax,iterations);
@@ -85,12 +83,11 @@ WM(:,iteration) = WanderingMean(m(:,iteration), ts);
 end
 WM = [m(1,:) ; WM];
 
+subplot(212)
 plot(ts*(0:Tmax),WM)
-title('Order parameter m, p = 40', 'Interpreter', 'LaTeX')
-xlabel('time [iterations]', 'Interpreter', 'LaTeX')
-ylabel('order parameter', 'Interpreter', 'LaTeX')
-set(gca,'fontsize', 14)
-axis([1 tmax -0.1 1])
-box off;
+title('Order parameter m, p = 40')
+xlabel('time')
+ylabel('order parameter')
+axis([1 tmax 0 1])
 
 
