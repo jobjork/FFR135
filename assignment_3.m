@@ -196,7 +196,7 @@ end
 
 % 3: Update the weights (and bias) 
 delta_i = beta*(zeta - O)*(1 - O.^2);
-delta_j = delta_i * w_out .* (1 - V.^2);
+delta_j = beta*delta_i * w_out .* (1 - V.^2);
 
 dw_out = lr * delta_i * V;
 dw_in = lr * delta_j .* xi';
