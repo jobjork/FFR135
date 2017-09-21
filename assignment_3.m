@@ -14,9 +14,11 @@ val_ans = val_data(:,3);
 
 lr = 0.02;
 beta = 1/2;
-%%
+
 class_1 = train_pat(train_ans == 1, :);
 class_2 = train_pat(train_ans == -1, :);
+
+%%
 hold on
 axis equal
 plot(class_1(:,1),class_1(:,2), 'r*')
@@ -96,7 +98,7 @@ plot(iter_vec,energy_val(1:10:end)/length(val_ans), 'b')
 legend('Training set','Validation set')
 set(gca,'fontsize', 8)
 xlabel('Iteration', 'Interpreter', 'LaTex')
-ylabel('Normalized Energy', 'Interpreter', 'LaTex')
+ylabel('Average Energy', 'Interpreter', 'LaTex')
 set(gca,'fontsize', 14)
 
 x_vec = linspace(-2,2, 100);
@@ -220,7 +222,7 @@ plot(iter_vec,energy_val(1:10:end)/length(val_ans), 'b')
 legend('Training set','Validation set')
 set(gca,'fontsize', 8)
 xlabel('Iteration', 'Interpreter', 'LaTex')
-ylabel('Normalized Energy', 'Interpreter', 'LaTex')
+ylabel('Average Energy', 'Interpreter', 'LaTex')
 set(gca,'fontsize', 14)
 
 x_vec = linspace(-2,2, 100);
